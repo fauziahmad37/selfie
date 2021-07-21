@@ -1,0 +1,130 @@
+<?php
+	defined('BASEPATH') OR exit('No direct script access allowed');
+	ini_set('max_execution_time', 600); 
+	ini_set('memory_limit','2048M');
+
+	include_once('Admin.php');
+	class C_tiket2 extends admin{
+
+		function master_customer(){
+
+			$this->load->view('header');
+            $this->load->view('finance/V_master_customer', Array('data'=>$data));
+            $this->load->view('footer');
+		}
+
+			function master_ct(){
+
+			$this->load->view('header');
+            $this->load->view('finance/V_master_ct2', Array('data'=>$data));
+            $this->load->view('footer');
+		}
+		
+		function get_data_by_name_customer(){
+			$this->load->model('M_tiket');
+		$post = $this->input->post();
+		$nama_customer = $post['customer_name'];
+		$data = $this->M_tiket->load_data_by_name_customer($nama_customer);
+		$this->load->view('/finance/customer_data', Array('data'=> $data));
+	}
+
+		function insert_master_customer(){
+			$this->load->model('M_tiket');
+			$data = array(
+				'customer_shortname'  => $this->input->post('customer_shortname'),
+				'customer_name' 	  => $this->input->post('customer_name'),
+				'address_invoice'	  => $this->input->post('address_invoice'),
+				'city_invoice'		  => $this->input->post('city_invoice'),
+				'postcode_invoice'	  => $this->input->post('postcode_invoice'),
+				'phone_invoice'		  => $this->input->post('phone_invoice'),
+				'fax_invoice'		  => $this->input->post('fax_invoice'),
+				'address_company'	  => $this->input->post('address_company'),
+				'city_company'		  => $this->input->post('city_company'),
+				'postcode_company'	  => $this->input->post('postcode_company'),
+				'phone_company'		  => $this->input->post('phone_company'),
+				'fax_company'		  => $this->input->post('fax_company'),
+				'contact_bill'		  => $this->input->post('contact_bill'),
+				'phone_bill'		  => $this->input->post('phone_bill'),
+				'mobile_phone_bill'	  => $this->input->post('mobile_phone_bill'),
+				'npwp'				  => $this->input->post('npwp'),
+				'description'		  => $this->input->post('description'),
+				'bank_name'			  => $this->input->post('bank_name'),
+				'bank_branch'		  => $this->input->post('bank_branch'),
+				'bank_account_name'	  => $this->input->post('bank_account_name'),
+				'bank_account_no'	  => $this->input->post('bank_account_no')
+				);
+			//print_r(isset($data['customer_name']));die;
+			$cek    = $this->M_tiket->cek_master_customer($data);
+			//print_r($cek[0]['count']);die;
+			if($cek[0]['count'] >=1){
+				echo "<script>
+				    alert('Customer code already registered');
+				</script>
+				";
+				 $this->load->view('header');
+	             $this->load->view('finance/V_master_customer', Array('data'=>$data));
+	             $this->load->view('footer');
+			}else{
+				$insert = $this->M_tiket->insert_master_customer($data);
+			}
+				echo "<script>
+				    alert('Customer code success registered');
+				</script>
+				";
+			// $this->load->view('header');
+   //          $this->load->view('finance/V_master_customer', Array('data'=>$data));
+   //          $this->load->view('footer');
+		}
+
+		function insert_master_ct(){
+			$this->load->model('M_tiket');
+			$data = array(
+				'customer_shortname'  => $this->input->post('customer_shortname'),
+				'customer_name' 	  => $this->input->post('customer_name'),
+				'address_invoice'	  => $this->input->post('address_invoice'),
+				'city_invoice'		  => $this->input->post('city_invoice'),
+				'postcode_invoice'	  => $this->input->post('postcode_invoice'),
+				'phone_invoice'		  => $this->input->post('phone_invoice'),
+				'fax_invoice'		  => $this->input->post('fax_invoice'),
+				'address_company'	  => $this->input->post('address_company'),
+				'city_company'		  => $this->input->post('city_company'),
+				'postcode_company'	  => $this->input->post('postcode_company'),
+				'phone_company'		  => $this->input->post('phone_company'),
+				'fax_company'		  => $this->input->post('fax_company'),
+				'contact_bill'		  => $this->input->post('contact_bill'),
+				'phone_bill'		  => $this->input->post('phone_bill'),
+				'mobile_phone_bill'	  => $this->input->post('mobile_phone_bill'),
+				'npwp'				  => $this->input->post('npwp'),
+				'description'		  => $this->input->post('description'),
+				'bank_name'			  => $this->input->post('bank_name'),
+				'bank_branch'		  => $this->input->post('bank_branch'),
+				'bank_account_name'	  => $this->input->post('bank_account_name'),
+				'bank_account_no'	  => $this->input->post('bank_account_no')
+				);
+			//print_r(isset($data['customer_name']));die;
+			$cek    = $this->M_tiket->cek_master_customer($data);
+			//print_r($cek[0]['count']);die;
+			if($cek[0]['count'] >=1){
+				echo "<script>
+				    alert('Customer code already registered');
+				</script>
+				";
+				 $this->load->view('header');
+	             $this->load->view('finance/V_master_customer', Array('data'=>$data));
+	             $this->load->view('footer');
+			}else{
+				$insert = $this->M_tiket->insert_master_ct($data);
+			}
+				echo "<script>
+				    alert('Customer code success registered');
+				</script>
+				";
+			// $this->load->view('header');
+   //          $this->load->view('finance/V_master_customer', Array('data'=>$data));
+   //          $this->load->view('footer');
+		}
+		
+		
+		
+	}
+?>
